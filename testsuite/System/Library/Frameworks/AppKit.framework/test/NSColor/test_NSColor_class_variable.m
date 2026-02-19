@@ -4,6 +4,7 @@
 #include <AppKit/AppKit.h>
 
 #include <darling-testsuite/assertion.h>
+#include <darling-testsuite/availability.h>
 
 void verify_catalog_color_name(NSColor* label, NSString* expectedCatalogName, NSString* expectedColorName);
 
@@ -13,9 +14,11 @@ int main() {
     // IDK why Apple didn't include these methods in their 10.14 SDK header...
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-method-access"
+#if MIN_MACOS(MACOS_10_14)
     verify_catalog_color_name([NSColor unemphasizedSelectedTextColor], @"System", @"unemphasizedSelectedTextColor");
 
     verify_catalog_color_name([NSColor unemphasizedSelectedTextBackgroundColor], @"System", @"unemphasizedSelectedTextBackgroundColor");
+#endif
 
     verify_catalog_color_name([NSColor linkColor], @"System", @"linkColor");
 #pragma clang diagnostic pop

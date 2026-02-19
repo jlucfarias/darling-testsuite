@@ -13,6 +13,7 @@
 
 #define MACOS_10_0          1000
 #define MACOS_10_8          1080
+#define MACOS_10_14         101400
 #define MACOS_10_15         101500
 #define MACOS_13_0          130000
 #define MACOS_14_0          140000
