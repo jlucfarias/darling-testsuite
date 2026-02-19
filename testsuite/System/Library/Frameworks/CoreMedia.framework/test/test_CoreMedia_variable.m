@@ -4,18 +4,22 @@
 #include <CoreMedia/CoreMedia.h>
 
 #include <darling-testsuite/assertion.h>
+#include <darling-testsuite/availability.h>
 
 void test_CoreMedia_CMTime_h(void);
 
 int main() {
     // #include <CoreMedia/CMSampleBuffer.h>
+#if MIN_MACOS(VERSION_10_7)
     assert_equals_CFStringRef(CFSTR("DisplayImmediately"), kCMSampleAttachmentKey_DisplayImmediately);
+#endif
 
     // #include <CoreMedia/CMTime.h>
     test_CoreMedia_CMTime_h();
 }
 
 void test_CoreMedia_CMTime_h(void) {
+#if MIN_MACOS(VERSION_10_7)
     // kCMTimeInvalid
     assert_equals_int64_t("kCMTimeInvalid.value", 0, kCMTimeInvalid.value);
     assert_equals_int32_t("kCMTimeInvalid.timescale", 0, kCMTimeInvalid.timescale);
@@ -45,4 +49,5 @@ void test_CoreMedia_CMTime_h(void) {
     assert_equals_int32_t("kCMTimeZero.timescale", 1, kCMTimeZero.timescale);
     assert_equals_uint32_t("kCMTimeZero.flags", 1 /* kCMTimeFlags_Valid */, kCMTimeZero.flags);
     assert_equals_int64_t("kCMTimeZero.epoch", 0, kCMTimeZero.epoch);
+#endif
 }

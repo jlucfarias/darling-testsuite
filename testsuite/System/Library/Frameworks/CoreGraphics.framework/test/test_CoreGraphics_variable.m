@@ -16,11 +16,15 @@ int main() {
 #endif
 
     // #include <CoreGraphics/CGFont.h>
+#if MIN_MACOS(VERSION_10_4)
     assert_equals_CFStringRef(CFSTR("kCGFontVariationAxisName"), kCGFontVariationAxisName);
     assert_equals_CFStringRef(CFSTR("kCGFontVariationAxisMinValue"), kCGFontVariationAxisMinValue);
     assert_equals_CFStringRef(CFSTR("kCGFontVariationAxisDefaultValue"), kCGFontVariationAxisDefaultValue);
     assert_equals_CFStringRef(CFSTR("kCGFontVariationAxisMaxValue"), kCGFontVariationAxisMaxValue);
+#endif
 
     // #include <CoreGraphics/CGWindow.h>
+#if MIN_MACOS(VERSION_10_5)
     assert_equals_CFStringRef(CFSTR("kCGWindowIsOnscreen"), kCGWindowIsOnscreen);
+#endif
 }

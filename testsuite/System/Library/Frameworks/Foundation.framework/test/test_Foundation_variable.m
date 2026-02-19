@@ -10,8 +10,12 @@ int main() {
     assert_equals_NSString(@"NSFailedAuthenticationException", NSFailedAuthenticationException);
 
     // #include <Foundation/NSTimeZone.h>
+#if MIN_MACOS(VERSION_10_5)
     assert_equals_NSString(@"kCFTimeZoneSystemTimeZoneDidChangeNotification", NSSystemTimeZoneDidChangeNotification);
+#endif
 
     // #include <Foundation/NSURL.h>
+#if MIN_MACOS(VERSION_10_9)
     assert_equals_NSString(@"NSURLUbiquitousItemDownloadingStatusNotDownloaded", NSURLUbiquitousItemDownloadingStatusNotDownloaded);
+#endif
 }

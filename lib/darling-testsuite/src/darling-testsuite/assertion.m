@@ -281,6 +281,15 @@ void assert_equals_CFStringRef(CFStringRef expected, CFStringRef actual) {
     }
 }
 
+void assert_equals_CFOptionFlags(char *variable_name, CFOptionFlags expected, CFOptionFlags actual) {
+    if (expected != actual) {
+        printf("Expected does not equal actual (%s)\n", variable_name == NULL ? "" : variable_name);
+        printf("Expected: %lu\n", expected); \
+        printf("Actual: %lu\n", actual); \
+        assert(expected == actual);
+    }
+}
+
 //
 // Objective-C Comparsion
 //

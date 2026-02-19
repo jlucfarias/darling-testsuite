@@ -18,6 +18,9 @@ void test_icontype_ic11(void);
 void test_icontype_ic12(void);
 void test_icontype_ic13(void);
 void test_icontype_ic14(void);
+void test_icontype_icp4(void);
+void test_icontype_icp5(void);
+void test_icontype_icp6(void);
 
 
 // -> count]
@@ -36,6 +39,9 @@ int main() {
     test_icontype_ic12();
     test_icontype_ic13();
     test_icontype_ic14();
+    test_icontype_icp4();
+    test_icontype_icp5();
+    test_icontype_icp6();
 }
 
 void template_test_icns_single_type(NSURL* icns_url, size_t expected_width, size_t expected_height) {
@@ -123,5 +129,26 @@ void test_icontype_ic14(void) {
     NSURL* icns_url = [NSURL fileURLWithPath:@"icns/Type_ic14.icns"];
     size_t expected_width = 512;
     size_t expected_height = 512;
+    template_test_icns_single_type(icns_url, expected_width, expected_height);
+}
+
+void test_icontype_icp4(void) {
+    NSURL* icns_url = [NSURL fileURLWithPath:@"icns/Type_icp4.icns"];
+    size_t expected_width = 16;
+    size_t expected_height = 16;
+    template_test_icns_single_type(icns_url, expected_width, expected_height);
+}
+
+void test_icontype_icp5(void) {
+    NSURL* icns_url = [NSURL fileURLWithPath:@"icns/Type_icp5.icns"];
+    size_t expected_width = 32;
+    size_t expected_height = 32;
+    template_test_icns_single_type(icns_url, expected_width, expected_height);
+}
+
+void test_icontype_icp6(void) {
+    NSURL* icns_url = [NSURL fileURLWithPath:@"icns/Type_icp6.icns"];
+    size_t expected_width = 48;
+    size_t expected_height = 48;
     template_test_icns_single_type(icns_url, expected_width, expected_height);
 }

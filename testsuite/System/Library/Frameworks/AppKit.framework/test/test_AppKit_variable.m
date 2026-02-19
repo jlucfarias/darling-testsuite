@@ -4,22 +4,34 @@
 #include <AppKit/AppKit.h>
 
 #include <darling-testsuite/assertion.h>
+#include <darling-testsuite/availability.h>
 
 void test_AppKit_NSApplication_h(void);
+void test_AppKit_NSFontDescriptor_h(void);
 void test_AppKit_NSKeyValueBinding_h(void);
+void test_AppKit_NSPopover_h(void);
+void test_AppKit_NSPrintInfo_h(void);
+void test_AppKit_NSSharingService_h(void);
 void test_AppKit_NSSpeechSynthesizer_h(void);
 
 extern const NSString* NSTextInputReplacementRangeAttributeName;
 
 int main() {
     // #include <AppKit/???>
+    // It is a private symbol
     assert_equals_NSString(@"NSTextInputReplacementRangeAttributeName", NSTextInputReplacementRangeAttributeName);
 
     // #include <AppKit/NSAccessibilityConstants.h>
+#if MIN_MACOS(VERSION_10_4)
+    assert_equals_NSString(@"AXMarkedMisspelled", NSAccessibilityMarkedMisspelledTextAttribute);
+#endif
+#if MIN_MACOS(VERSION_10_6)
+    assert_equals_NSString(@"AXLevelIndicator", NSAccessibilityLevelIndicatorRole);
+#endif
+#if MIN_MACOS(VERSION_10_9)
     assert_equals_NSString(@"AXShowAlternateUI", NSAccessibilityShowAlternateUIAction);
     assert_equals_NSString(@"AXShowDefaultUI", NSAccessibilityShowDefaultUIAction);
-    assert_equals_NSString(@"AXMarkedMisspelled", NSAccessibilityMarkedMisspelledTextAttribute);
-    assert_equals_NSString(@"AXLevelIndicator", NSAccessibilityLevelIndicatorRole);
+#endif
 
     // #include <AppKit/NSApplication.h>
     test_AppKit_NSApplication_h();
@@ -34,8 +46,13 @@ int main() {
     assert_equals_NSString(@"NSSystemColorsDidChangeNotification" , NSSystemColorsDidChangeNotification);
 
     // #include <AppKit/NSDraggingItem.h>
+#if MIN_MACOS(VERSION_10_7)
     assert_equals_NSString(@"icon", NSDraggingImageComponentIconKey);
     assert_equals_NSString(@"label", NSDraggingImageComponentLabelKey);
+#endif
+
+    // #include <AppKit/NSFontDescriptor.h>
+    test_AppKit_NSFontDescriptor_h();
 
     // #include <AppKit/NSGraphics.h>
     assert_equals_NSString(@"NSCustomColorSpace", NSCustomColorSpace);
@@ -48,21 +65,21 @@ int main() {
     assert_equals_NSString(@"NSMenuWillSendActionNotification", NSMenuWillSendActionNotification);
 
     // #include <AppKit/NSPasteboard.h>
-    assert_equals_NSString(@"Apple InkText pasteboard type", NSInkTextPboardType);
-    assert_equals_NSString(@"NSMenuWillSendActionNotification", NSMenuWillSendActionNotification);
-    assert_equals_NSString(@"Apple multiple text selection pasteboard type", NSMultipleTextSelectionPboardType);
-    assert_equals_NSString(@"com.apple.cocoa.pasteboard.multiple-text-selection", NSPasteboardTypeMultipleTextSelection);
-    assert_equals_NSString(@"public.url", NSPasteboardTypeURL);
+    test_AppKit_NSPasteboard_h();
+
+    // #include <AppKit/NSPopover.h>
+    test_AppKit_NSPopover_h();
 
     // #include <AppKit/NSPrintInfo.h>
-    assert_equals_NSString(@"NSScalingFactor", NSPrintScalingFactor);
-    assert_equals_NSString(@"selectedValue", NSSelectedValueBinding);
+    test_AppKit_NSPrintInfo_h();
 
     // #include <AppKit/NSScreen.h>
+#if MIN_MACOS(VERSION_10_6)
     assert_equals_NSString(@"NSScreenColorSpaceDidChangeNotification", NSScreenColorSpaceDidChangeNotification);
+#endif
 
     // #include <AppKit/NSSharingService.h>
-    assert_equals_NSString(@"com.apple.share.System.add-to-safari-reading-list", NSSharingServiceNameAddToSafariReadingList);
+    test_AppKit_NSSharingService_h();
 
     // #include <AppKit/NSSpeechSynthesizer.h>
     test_AppKit_NSSpeechSynthesizer_h();
@@ -70,7 +87,9 @@ int main() {
     // #include <AppKit/NSWorkspace.h>
     assert_equals_NSString(@"NSWorkspaceDidDeactivateApplicationNotification", NSWorkspaceDidDeactivateApplicationNotification);
     assert_equals_NSString(@"NSWorkspaceSessionDidBecomeActiveNotification", NSWorkspaceSessionDidBecomeActiveNotification);
+#if MIN_MACOS(VERSION_10_6)
     assert_equals_NSString(@"NSWorkspaceDidActivateApplicationNotification", NSWorkspaceDidActivateApplicationNotification);
+#endif
 }
 
 
@@ -94,6 +113,31 @@ void test_AppKit_NSApplication_h(void) {
     assert_equals_NSUInteger("NSApplicationPresentationDisableCursorLocationAssistance", 1 << 12, NSApplicationPresentationDisableCursorLocationAssistance);
 }
 
+void test_AppKit_NSFontDescriptor_h(void) {
+    assert_equals_NSString(@"NSFontFamilyAttribute", NSFontFamilyAttribute);
+    assert_equals_NSString(@"NSFontNameAttribute", NSFontNameAttribute);
+    assert_equals_NSString(@"NSFontFaceAttribute", NSFontFaceAttribute);
+    assert_equals_NSString(@"NSFontSizeAttribute", NSFontSizeAttribute);
+    assert_equals_NSString(@"NSFontVisibleNameAttribute", NSFontVisibleNameAttribute);
+    assert_equals_NSString(@"NSFontMatrixAttribute", NSFontMatrixAttribute);
+    assert_equals_NSString(@"NSCTFontVariationAttribute", NSFontVariationAttribute);
+    assert_equals_NSString(@"NSCTFontCharacterSetAttribute", NSFontCharacterSetAttribute);
+    assert_equals_NSString(@"NSCTFontCascadeListAttribute", NSFontCascadeListAttribute);
+    assert_equals_NSString(@"NSCTFontTraitsAttribute", NSFontTraitsAttribute);
+    assert_equals_NSString(@"NSCTFontFixedAdvanceAttribute", NSFontFixedAdvanceAttribute);
+
+#if MIN_MACOS(VERSION_10_5)
+    assert_equals_NSString(@"NSCTFontFeatureSettingsAttribute", NSFontFeatureSettingsAttribute);
+#endif
+
+    assert_equals_NSString(@"CTFeatureSelectorIdentifier", NSFontFeatureSelectorIdentifierKey);
+    assert_equals_NSString(@"CTFeatureTypeIdentifier", NSFontFeatureTypeIdentifierKey);
+
+    assert_equals_NSString(@"NSCTFontSymbolicTrait", NSFontSymbolicTrait);
+    assert_equals_NSString(@"NSCTFontWeightTrait", NSFontWeightTrait);
+    assert_equals_NSString(@"NSCTFontProportionTrait", NSFontWidthTrait);
+    assert_equals_NSString(@"NSCTFontSlantTrait", NSFontSlantTrait);
+}
 
 void test_AppKit_NSKeyValueBinding_h(void) {
     // NSBindingInfoKey
@@ -145,7 +189,56 @@ void test_AppKit_NSKeyValueBinding_h(void) {
     assert_equals_NSString(@"NSDisplayPattern", NSDisplayPatternBindingOption);
 }
 
+void test_AppKit_NSPasteboard_h(void) {
+    assert_equals_NSString(@"NSMenuWillSendActionNotification", NSMenuWillSendActionNotification);
+
+#if MIN_MACOS(VERSION_10_0)
+    assert_equals_NSString(@"Apple InkText pasteboard type", NSInkTextPboardType);
+#endif
+#if MIN_MACOS(VERSION_10_5)
+    assert_equals_NSString(@"Apple multiple text selection pasteboard type", NSMultipleTextSelectionPboardType);
+#endif
+#if MIN_MACOS(VERSION_10_6)
+    assert_equals_NSString(@"com.apple.cocoa.pasteboard.multiple-text-selection", NSPasteboardTypeMultipleTextSelection);
+#endif
+#if MIN_MACOS(VERSION_10_13)
+    assert_equals_NSString(@"public.url", NSPasteboardTypeURL);
+#endif
+}
+
+void test_AppKit_NSPopover_h(void) {
+#if MIN_MACOS(VERSION_10_7)
+    assert_equals_NSString(@"NSPopoverDidCloseNotification", NSPopoverDidCloseNotification);
+    assert_equals_NSString(@"NSPopoverWillCloseNotification", NSPopoverWillCloseNotification);
+    assert_equals_NSString(@"NSPopoverWillShowNotification", NSPopoverWillShowNotification);
+    assert_equals_NSString(@"NSPopoverDidShowNotification", NSPopoverDidShowNotification);
+#endif
+}
+
+void test_AppKit_NSPrintInfo_h(void) {
+    assert_equals_NSString(@"NSScalingFactor", NSPrintScalingFactor);
+
+#if MIN_MACOS(VERSION_10_6)
+    assert_equals_NSString(@"NSJobSavingURL", NSPrintJobSavingURL);
+#endif
+}
+
+void test_AppKit_NSSharingService_h(void) {
+#if MIN_MACOS(VERSION_10_8)
+    assert_equals_NSString(@"com.apple.share.System.add-to-iphoto", NSSharingServiceNameAddToIPhoto);
+    assert_equals_NSString(@"com.apple.share.System.add-to-safari-reading-list", NSSharingServiceNameAddToSafariReadingList);
+    assert_equals_NSString(@"com.apple.messages.ShareExtension";, NSSharingServiceNameComposeMessage);
+
+    assert_equals_NSString(@"com.apple.share.Facebook.post", NSSharingServiceNamePostOnFacebook);
+    assert_equals_NSString(@"com.apple.share.LinkedIn.post", NSSharingServiceNamePostOnLinkedIn);
+    assert_equals_NSString(@"com.apple.share.SinaWeibo.post", NSSharingServiceNamePostOnSinaWeibo);
+    assert_equals_NSString(@"com.apple.share.TencentWeibo.post", NSSharingServiceNamePostOnTencentWeibo);
+    assert_equals_NSString(@"com.apple.share.Twitter.post", NSSharingServiceNamePostOnTwitter);
+#endif
+}
+
 void test_AppKit_NSSpeechSynthesizer_h(void) {
+#if MIN_MACOS(VERSION_10_3)
     // NSVoiceGenderName
     assert_equals_NSString(@"VoiceGenderFemale", NSVoiceGenderFemale);
     assert_equals_NSString(@"VoiceGenderMale", NSVoiceGenderMale);
@@ -153,10 +246,14 @@ void test_AppKit_NSSpeechSynthesizer_h(void) {
     // NSVoiceAttributeKey
     assert_equals_NSString(@"VoiceName", NSVoiceName);
     assert_equals_NSString(@"VoiceGender", NSVoiceGender);
+#endif
+#if MIN_MACOS(VERSION_10_5)
+    // NSVoiceAttributeKey
     assert_equals_NSString(@"VoiceLocaleIdentifier",NSVoiceLocaleIdentifier);
 
     // NSSpeechPropertyKey
     assert_equals_NSString(@"rate", NSSpeechRateProperty);
     assert_equals_NSString(@"pbas", NSSpeechPitchBaseProperty);
     assert_equals_NSString(@"volm", NSSpeechVolumeProperty);
+#endif
 }
